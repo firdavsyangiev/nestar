@@ -31,6 +31,6 @@ import { AuthService } from './components/auth/auth.service';
 		DatabaseModule,
 	],
 	controllers: [AppController],
-	providers: [AppService, AppResolver, AuthService],
+	providers: [AppService, AppResolver],
 })
 export class AppModule {}
