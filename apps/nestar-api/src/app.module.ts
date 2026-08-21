@@ -8,6 +8,7 @@ import { AppResolver } from './app.resolver';
 import { ComponentsModule } from './components/components.module';
 import { DatabaseModule } from './database/database.module';
 import { T } from './libs/types/common';
+import { AuthService } from './components/auth/auth.service';
 
 @Module({
 	imports: [
@@ -30,6 +31,6 @@ import { T } from './libs/types/common';
 		DatabaseModule,
 	],
 	controllers: [AppController],
-	providers: [AppService, AppResolver],
+	providers: [AppService, AppResolver, AuthService],
 })
 export class AppModule {}
