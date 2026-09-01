@@ -2,7 +2,7 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsIn, IsInt, IsNotEmpty, IsOptional, Length, Min } from 'class-validator';
 import { PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
 import type { ObjectId } from 'mongoose';
-import { availablePropertySorts } from '../../config';
+import { availableOptions, availablePropertySorts } from '../../config';
 import { Direction } from '../../enums/common.enum';
 
 @InputType()
@@ -215,12 +215,12 @@ export class AllPropertiesInquiry {
 	@IsNotEmpty()
 	@Min(1)
 	@Field(() => Int)
-	page: number;
+	page!: number;
 
 	@IsNotEmpty()
 	@Min(1)
 	@Field(() => Int)
-	limit: number;
+	limit!: number;
 
 	@IsOptional()
 	@IsIn(availablePropertySorts)
@@ -233,5 +233,5 @@ export class AllPropertiesInquiry {
 
 	@IsNotEmpty()
 	@Field(() => ALPISearch)
-	search: ALPISearch;
+	search!: ALPISearch;
 }
