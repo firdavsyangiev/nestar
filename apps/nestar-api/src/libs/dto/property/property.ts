@@ -85,7 +85,7 @@ export class Property {
 
 @ObjectType()
 export class Properties {
-	@Field(() => Properties)
+	@Field(() => [Property])
 	list: Property[] | undefined;
 
 	@Field(() => [TotalCounter], { nullable: true })
