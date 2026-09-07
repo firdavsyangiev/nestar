@@ -6,7 +6,7 @@ import { MemberService } from '../member/member.service';
 import { FollowInquiry } from '../../libs/dto/follow/follow.input';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { T } from '../../libs/types/common';
-import { lookupFollowerData, lookupFollowingData } from '../../libs/config';
+import { lookupAuthMemberLiked, lookupFollowerData, lookupFollowingData } from '../../libs/config';
 
 @Injectable()
 export class FollowService {
@@ -82,7 +82,7 @@ export class FollowService {
 		return result;
 	}
 
-	public async getMemberFollowings(followerId: ObjectId, input: FollowInquiry): Promise<Followings> {
+	public async getMemberFollowings(memberId: ObjectId, input: FollowInquiry): Promise<Followings> {
 		const { page, limit, search } = input;
 
 		if (!search?.followerId) {
@@ -105,6 +105,7 @@ export class FollowService {
 							{ $skip: (page - 1) * limit },
 							{ $limit: limit },
 							// meLiked
+							lookupAuthMemberLiked(memberId, '$followingId'),
 							// meFollowed
 							lookupFollowingData,
 							{ $unwind: '$followingData' },
@@ -122,7 +123,7 @@ export class FollowService {
 		return result[0];
 	}
 
-	public async getMemberFollowers(followerId: ObjectId, input: FollowInquiry): Promise<Followers> {
+	public async getMemberFollowers(memberId: ObjectId, input: FollowInquiry): Promise<Followers> {
 		const { page, limit, search } = input;
 
 		if (!search?.followingId) {
@@ -145,6 +146,7 @@ export class FollowService {
 							{ $skip: (page - 1) * limit },
 							{ $limit: limit },
 							// meLiked
+							lookupAuthMemberLiked(memberId, '$followerId'),
 							// meFollowed
 							lookupFollowerData,
 							{ $unwind: '$followerData' },
